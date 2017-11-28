@@ -3,24 +3,24 @@
 #include <unistd.h> 
 
 #define NUM 6
+int a = 0;
 int main()
 {
     void print_msg(void*);
    
     pthread_t t1,t2;
-    pthread_create(&t1,NULL,(void*)print_msg,(void *)"hello,");
-    pthread_create(&t2,NULL,(void*)print_msg,(void *)"world!\n");
+    pthread_create(&t1,NULL,(void*)print_msg,(void *)"t1\n");
+    pthread_create(&t2,NULL,(void*)print_msg,(void *)"t2\n");
    
     pthread_join(t1,NULL);
     pthread_join(t2,NULL);  
+	printf("final a is %d \n",a);
 }
 void print_msg(void* m)
 {
     char *cp=(char*)m;
-    int i;
-    for(i=0;i<NUM;i++)
-    {
-        printf("%s",cp);
-		sleep(1);
-    }
+	for(int i = 0;i<10000;i++){
+		a++;
+	}
+    
 }
