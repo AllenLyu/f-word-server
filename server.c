@@ -1,9 +1,11 @@
 #include <pthread.h>
 #include "stdio.h"
 #include <unistd.h> 
+#include <linux/Spinlock.h>
 
 #define NUM 6
 int a = 0;
+spinlock_t my_lock = SPIN_LOCK_UNLOCKED; 
 int main()
 {
     void print_msg(void*);
@@ -20,6 +22,7 @@ void print_msg(void* m)
 {
     char *cp=(char*)m;
 	for(int i = 0;i<10000;i++){
+    
 		a++;
 	}
     
