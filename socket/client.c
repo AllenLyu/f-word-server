@@ -13,7 +13,7 @@ int main(int argc, char *argv[])
     char buf[MAXLINE];
     char str[INET_ADDRSTRLEN];
 
-    int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
+    int sockfd = socket(AF_INET,SOCK_STREAM, IPPROTO_TCP);
 
     struct sockaddr_in servaddr = {0};
     servaddr.sin_family = AF_INET;
@@ -22,14 +22,14 @@ int main(int argc, char *argv[])
 
     while (fgets(buf, MAXLINE, stdin) != NULL)
     {
-        // int count = sendto(sockfd, buf, strlen(buf), 0, (sockaddr *)&servaddr, sizeof(servaddr));
-        // if (count == -1)
-        // {
-        //     printf("sendto error");
-        //     return 0;
-        // }
+        int count = sendto(sockfd, buf, strlen(buf), 0, (struct sockaddr *)&servaddr, sizeof(servaddr));
+        if (count == -1)
+        {
+            printf("sendto error");
+            return 0;
+        }
 
-        int count = recvfrom(sockfd, buf, MAXLINE, 0, NULL, 0);
+         count = recvfrom(sockfd, buf, MAXLINE, 0, NULL, 0);
         if (count == -1)
         {
             printf("recvfrom error");
