@@ -26,7 +26,19 @@ int main(int argc,char **argvs){
         len = sizeof(clientaddr);
         clientfd = accept(listenfd,(struct sockaddr *)&clientaddr,&len);
         printf("connect from %s,port %d \n",inet_ntop(AF_INET,&clientaddr,buff,sizeof(buff)),ntohs(clientaddr.sin_port));
-        snprintf(buff,sizeof(buff),"HTTP/1.1 200 OK");
+        snprintf(buff,sizeof(buff),"HTTP/1.1 200 OK \r\n");
+        snprintf(buff,sizeof(buff),"content-type: text\\plain \r\n");
+        
+        snprintf(buff,sizeof(buff),"\r\n\r\n");
+        snprintf(buff,sizeof(buff),"qqq");
+        
+
+        char recv_buff[1024];
+        read(clientfd,&recv_buff,sizeof(recv_buff));
+        printf("%s",recv_buff);
+
+
+        write(clientfd,buff,sizeof(buff));
         close(clientfd);
     }
 
