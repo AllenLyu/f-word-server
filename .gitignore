@@ -1,3 +1,5 @@
 bin
 .vscode
 *.out
+socket/*.out
+.idea

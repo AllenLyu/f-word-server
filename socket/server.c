@@ -25,13 +25,22 @@ int main(int argc,char **argvs){
     while(1){
         len = sizeof(clientaddr);
         clientfd = accept(listenfd,(struct sockaddr *)&clientaddr,&len);
-        printf("connect from %s,port %d \n",inet_ntop(AF_INET,&clientaddr,buff,sizeof(buff)),ntohs(clientaddr.sin_port));
-        snprintf(buff,sizeof(buff),"HTTP/1.1 200 OK \r\n");
-        snprintf(buff,sizeof(buff),"content-type: text\\plain \r\n");
+        // printf("connect from %s,port %d \n",inet_ntop(AF_INET,&clientaddr,buff,sizeof(buff)),ntohs(clientaddr.sin_port));
+        // snprintf(buff,sizeof(buff),"HTTP/1.1 200 OK \r\nContent-type: text\\plain \r\n \r\n\r\n");
         
-        snprintf(buff,sizeof(buff),"\r\n\r\n");
-        snprintf(buff,sizeof(buff),"qqq");
+        // snprintf(buff,sizeof(buff),"\r\n\r\n");
+        // snprintf(buff,sizeof(buff),"qqq");
+
+        FILE *f = fopen("http_example","r");
         
+
+        while(!feof(f)){
+            fscanf(f,"%s",buff);
+            printf("%s",buff);
+        }
+
+        fclose(f);
+    
 
         char recv_buff[1024];
         read(clientfd,&recv_buff,sizeof(recv_buff));
@@ -39,6 +48,7 @@ int main(int argc,char **argvs){
 
 
         write(clientfd,buff,sizeof(buff));
+        memset(buff,0,sizeof(buff));
         close(clientfd);
     }
 
