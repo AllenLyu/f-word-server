@@ -4,7 +4,7 @@
 #include <arpa/inet.h>
 #include <fcntl.h> // for open
 #include <unistd.h> // for close
-
+#define LISTEN 1
 int main(int argc,char **argvs){
     int listenfd,clientfd;
     socklen_t len;
@@ -22,7 +22,8 @@ int main(int argc,char **argvs){
     bind(listenfd,(struct sockaddr *)&serveraddr,sizeof(serveraddr));
     listen(listenfd,1024);
 
-    while(1){
+    memset(buff,0,sizeof(buff));
+    while(LISTEN){
         len = sizeof(clientaddr);
         clientfd = accept(listenfd,(struct sockaddr *)&clientaddr,&len);
         // printf("connect from %s,port %d \n",inet_ntop(AF_INET,&clientaddr,buff,sizeof(buff)),ntohs(clientaddr.sin_port));
@@ -31,8 +32,7 @@ int main(int argc,char **argvs){
         // snprintf(buff,sizeof(buff),"\r\n\r\n");
         // snprintf(buff,sizeof(buff),"qqq");
 
-        FILE *f = fopen("http_example","r");
-        
+        FILE *f = fopen("/home/baofeng/Project/f-word-server/socket/http_example","r");
 
         while(!feof(f)){
             fscanf(f,"%s",buff);
