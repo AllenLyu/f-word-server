@@ -30,17 +30,23 @@ int main(int argc,char **argvs){
 
         FILE *f = fopen("/home/baofeng/Project/f-word-server/socket/http_example","r");
         fread(buff,sizeof(char),1024,f);
+        write(clientfd,buff,sizeof(buff));
+        memset(buff,0,sizeof(buff));
 
         fclose(f);
-        printf("%s",buff);
 
         char recv_buff[1024];
         read(clientfd,&recv_buff,sizeof(recv_buff));
 //        printf("%s",recv_buff);
+        const char *delims = "\r\n";
+        char *res = NULL;
+        res = strtok(recv_buff,delims);
 
+        while (res!=NULL){
+            printf("%s",res);
+            res = strtok(NULL,delims);
+        }
 
-        write(clientfd,buff,sizeof(buff));
-        memset(buff,0,sizeof(buff));
         close(clientfd);
     }
 #pragma clang diagnostic pop
