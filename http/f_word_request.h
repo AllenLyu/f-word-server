@@ -1,14 +1,20 @@
 //
-// Created by baofeng on 17-12-11.
+// Created by Allen on 17-12-11.
 //
 
 #ifndef F_WORD_SERVER_F_WORD_REQUEST_H
 #define F_WORD_SERVER_F_WORD_REQUEST_H
 
+struct f_word_request_s{
+    char* location;
+    char* method;
+    double version;
 
 
-#define F_WORD_HTML 1
-#define F_WORD_JS 2
-#define F_WORD_CSS 3
+};
 
+typedef struct f_word_request_s f_word_request_t;
+
+
+f_word_request_t* get_request(const char *request);
 #endif //F_WORD_SERVER_F_WORD_REQUEST_H

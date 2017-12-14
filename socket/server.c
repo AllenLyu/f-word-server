@@ -3,7 +3,8 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h> // for close
-#define LISTEN 1
+#include "../http/f_word_request.h"
+
 int main(int argc,char **argvs){
     int listenfd,clientfd;
     socklen_t len;
@@ -18,12 +19,14 @@ int main(int argc,char **argvs){
     serveraddr.sin_addr.s_addr = htonl(INADDR_ANY);
     serveraddr.sin_port = htons(6543);
 
+
     bind(listenfd,(struct sockaddr *)&serveraddr,sizeof(serveraddr));
     listen(listenfd,1024);
 
     memset(buff,0,sizeof(buff));
 #pragma clang diagnostic push
 #pragma clang diagnostic ignored "-Wmissing-noreturn"
+    printf("start listening on port %d",serveraddr.sin_port);
     while(1){
         len = sizeof(clientaddr);
         clientfd = accept(listenfd,(struct sockaddr *)&clientaddr,&len);
@@ -37,15 +40,9 @@ int main(int argc,char **argvs){
 
         char recv_buff[1024];
         read(clientfd,&recv_buff,sizeof(recv_buff));
-//        printf("%s",recv_buff);
-        const char *delims = "\r\n";
-        char *res = NULL;
-        res = strtok(recv_buff,delims);
+        printf("%s",recv_buff);
 
-        while (res!=NULL){
-            printf("%s",res);
-            res = strtok(NULL,delims);
-        }
+        f_word_request_t *request = get_request(recv_buff);
 
         close(clientfd);
     }
