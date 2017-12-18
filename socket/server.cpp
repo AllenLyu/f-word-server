@@ -3,7 +3,7 @@
 #include <netinet/in.h>
 #include <arpa/inet.h>
 #include <unistd.h> // for close
-#include "../http/f_word_request.h"
+#include "../http/fuck_request.h"
 
 int main(int argc,char **argvs){
     int listenfd,clientfd;
@@ -42,7 +42,8 @@ int main(int argc,char **argvs){
         read(clientfd,&recv_buff,sizeof(recv_buff));
         printf("%s",recv_buff);
 
-        f_word_request_t *request = get_request(recv_buff);
+        FuckRequest *r = new FuckRequest(recv_buff);
+//        f_word_request_t *request = get_request(recv_buff);
 
         close(clientfd);
     }

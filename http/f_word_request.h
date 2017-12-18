@@ -16,5 +16,5 @@ struct f_word_request_s{
 typedef struct f_word_request_s f_word_request_t;
 
 
-f_word_request_t* get_request(const char *request);
+f_word_request_t* get_request( char *request);
 #endif //F_WORD_SERVER_F_WORD_REQUEST_H
