@@ -5,7 +5,10 @@
 #include <iostream>
 #include "fuck_request.h"
 #include "string"
-FuckRequest::FuckRequest(char *rawRequest) {
-    std::string *request = new std::string(rawRequest);
-    std::cout<<request<<std::endl;
+FuckRequest::FuckRequest(const char *rawRequest) {
+    std::string  *request = new std::string(rawRequest,sizeof(char)*50);
+    std::cout<<request[0]<<std::endl;
+    int index = request[0].find("\\r\\n\\r\\n");
+    std::cout<<index<<std::endl;
+
 }

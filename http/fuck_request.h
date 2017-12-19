@@ -11,7 +11,7 @@ public:
     std::string method;
     std::string version;
     std::string location;
-    FuckRequest(char* rawRequest);
+    FuckRequest(const char* rawRequest);
 
 private:
 
